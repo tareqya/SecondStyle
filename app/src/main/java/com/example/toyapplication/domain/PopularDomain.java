@@ -1,4 +1,4 @@
-package com.example.toyapplication.Domain;
+package com.example.toyapplication.domain;
 
 public class PopularDomain {
     private String title;

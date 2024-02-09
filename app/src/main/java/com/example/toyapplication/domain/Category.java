@@ -1,4 +1,4 @@
-package com.example.toyapplication.Domain;
+package com.example.toyapplication.domain;
 
 public class Category {
     private String name;
@@ -34,7 +34,8 @@ public class Category {
         return selected;
     }
 
-    public void setSelected(boolean select){
+    public Category setSelected(boolean select){
         this.selected = select;
+        return this;
     }
 }

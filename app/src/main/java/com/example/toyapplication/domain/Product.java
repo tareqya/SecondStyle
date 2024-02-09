@@ -1,4 +1,4 @@
-package com.example.toyapplication.Domain;
+package com.example.toyapplication.domain;
 
 import com.example.toyapplication.information.FirebaseId;
 import com.google.firebase.firestore.Exclude;
@@ -8,6 +8,7 @@ public class Product extends FirebaseId {
     private String imagePath;
     private String imageUrl;
     private double price;
+    private String category;
 
     public Product() {}
 
@@ -39,12 +40,22 @@ public class Product extends FirebaseId {
     }
 
     public Product setImageUrl(String imageUrl){
-        this.imagePath = imageUrl;
+        this.imageUrl = imageUrl;
         return this;
     }
 
     @Exclude
     public String getImageUrl(){
         return imageUrl;
+    }
+
+
+    public Product setCategory(String category){
+        this.category = category;
+        return this;
+    }
+
+    public String getCategory(){
+        return  this.category;
     }
 }
