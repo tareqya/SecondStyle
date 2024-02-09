@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.CartFragment">
 
-
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="cart_fragment" />
+        android:id="@+id/fCart_TV_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cart" 
+        android:textSize="24sp"
+        android:padding="10dp"
+        android:textStyle="bold"
+        />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fCart_RV_products"
+        android:layout_below="@id/fCart_TV_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/fCart_BTN_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fCart_RV_products"
+        android:layout_centerHorizontal="true"
+        android:text="Order Now"
+        android:layout_marginTop="10dp"
+        />
+</RelativeLayout>
