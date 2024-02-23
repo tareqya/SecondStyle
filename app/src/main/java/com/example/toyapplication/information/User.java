@@ -1,5 +1,7 @@
 package com.example.toyapplication.information;
 
+import com.google.firebase.firestore.Exclude;
+
 import java.io.Serializable;
 
 public class User extends FirebaseId implements Serializable {
@@ -7,6 +9,8 @@ public class User extends FirebaseId implements Serializable {
     private String lastName;
     private String phone;
     private String email;
+    private String imagePath;
+    private String imageUrl;
 
     public User() {}
 
@@ -46,4 +50,25 @@ public class User extends FirebaseId implements Serializable {
         return this;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public User setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+        return this;
+    }
+    @Exclude
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public User setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+    @Exclude
+    public String getFullName(){
+        return this.firstName + " " + this.lastName;
+    }
 }

@@ -52,6 +52,11 @@ public class Sign_Activity extends AppCompatActivity {
                     Toast.makeText(Sign_Activity.this, err, Toast.LENGTH_SHORT).show();
                 }
             }
+
+            @Override
+            public void fetchUserDataComplete(User user) {
+
+            }
         });
 
         database.setAuthCallBack(new AuthCallBack() {

@@ -22,7 +22,7 @@ public class Cart {
 
     public boolean addProduct(Product product){
         for(Product p: this.products){
-            if(p.getId().equals(p.getId()))
+            if(p.getId().equals(product.getId()))
                 return false;
         }
 
@@ -31,6 +31,15 @@ public class Cart {
     }
 
     public void removeProduct(Product product){
-        this.products.remove(product);
+        for(Product p:this.products){
+            if(p.getId().equals(product.getId())){
+                this.products.remove(p);
+                return;
+            }
+        }
+    }
+
+    public void cleanCart(){
+        this.products.clear();
     }
 }

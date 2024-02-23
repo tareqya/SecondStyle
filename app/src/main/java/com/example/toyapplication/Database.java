@@ -8,8 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.toyapplication.callback.AuthCallBack;
+import com.example.toyapplication.callback.OrderCallBack;
 import com.example.toyapplication.callback.ProductsCallBack;
 import com.example.toyapplication.callback.UserCallBack;
+import com.example.toyapplication.domain.Order;
 import com.example.toyapplication.domain.Product;
 import com.example.toyapplication.information.User;
 import com.example.toyapplication.main.ShopActivity;
@@ -32,12 +34,14 @@ import java.util.ArrayList;
 public class Database {
     public static final String USERS_TABLE = "Users";
     public static final String Clothes_TABLE = "Clothes";
+    public static final String ORDERS_TABLE = "Orders";
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private FirebaseStorage storage;
     private AuthCallBack authCallBack;
     private UserCallBack userCallBack;
     private ProductsCallBack productsCallBack;
+    private OrderCallBack orderCallBack;
 
     public Database(){
         mAuth = FirebaseAuth.getInstance();
@@ -52,6 +56,10 @@ public class Database {
         this.userCallBack = userCallBack;
     }
     public void setProductsCallBack(ProductsCallBack productsCallBack){this.productsCallBack = productsCallBack;}
+    public void setOrderCallBack(OrderCallBack orderCallBack){
+        this.orderCallBack = orderCallBack;
+    }
+
     public FirebaseUser getCurrentUser(){
         return this.mAuth.getCurrentUser();
     }
@@ -68,6 +76,7 @@ public class Database {
     public void logout(){
         mAuth.signOut();
     }
+
     public void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
@@ -94,15 +103,18 @@ public class Database {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 ArrayList<Product> products = new ArrayList<>();
-                for(DocumentSnapshot snapshot : value.getDocuments()) {
-                    Product product = snapshot.toObject(Product.class);
-                    product.setId(snapshot.getId());
-                    if(product.getImagePath() != null){
-                        String imageUrl = downloadImageUrl(product.getImagePath());
-                        product.setImageUrl(imageUrl);
+                if(value != null){
+                    for(DocumentSnapshot snapshot : value.getDocuments()) {
+                        Product product = snapshot.toObject(Product.class);
+                        product.setId(snapshot.getId());
+                        if(product.getImagePath() != null){
+                            String imageUrl = downloadImageUrl(product.getImagePath());
+                            product.setImageUrl(imageUrl);
+                        }
+                        products.add(product);
                     }
-                    products.add(product);
                 }
+
 
                 productsCallBack.onProductsFetchComplete(products);
             }
@@ -124,5 +136,30 @@ public class Database {
             return false;
         }
 
+    }
+
+    public void createOrder(Order order){
+        this.db.collection(ORDERS_TABLE).document().set(order).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                orderCallBack.onOrderAddComplete(task);
+            }
+        });
+    }
+
+    public void fetchUserData(String uid) {
+        this.db.collection(USERS_TABLE).document(uid).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                if(value == null) return;
+                User user = value.toObject(User.class);
+                if(user.getImagePath() != null){
+                    String imageUrl = downloadImageUrl(user.getImagePath());
+                    user.setImageUrl(imageUrl);
+                }
+                user.setId(value.getId());
+                userCallBack.fetchUserDataComplete(user);
+            }
+        });
     }
 }

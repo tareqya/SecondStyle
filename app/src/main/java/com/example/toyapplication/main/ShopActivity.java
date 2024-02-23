@@ -31,15 +31,12 @@ public class ShopActivity extends AppCompatActivity {
     }
 
     private void start() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-
         homeFragment = new HomeFragment(this);
         getSupportFragmentManager().beginTransaction().add(R.id.main_frame_home, homeFragment).commit();
-        cartFragment = new CartFragment(this, fragmentManager);
+        cartFragment = new CartFragment(this);
         getSupportFragmentManager().beginTransaction().add(R.id.main_frame_addproduct, cartFragment).commit();
         profileFragment = new ProfileFragment(this);
         getSupportFragmentManager().beginTransaction().add(R.id.main_frame_profile, profileFragment).commit();
-
 
         main_frame_profile.setVisibility(View.INVISIBLE);
         main_frame_addproduct.setVisibility(View.INVISIBLE);
@@ -56,6 +53,7 @@ public class ShopActivity extends AppCompatActivity {
                     main_frame_addproduct.setVisibility(View.INVISIBLE);
                     main_frame_home.setVisibility(View.INVISIBLE);
                 } else if (item.getItemId() == R.id.addproduct) {
+                    cartFragment.displayCartUI();
                     main_frame_profile.setVisibility(View.INVISIBLE);
                     main_frame_addproduct.setVisibility(View.VISIBLE);
                     main_frame_home.setVisibility(View.INVISIBLE);

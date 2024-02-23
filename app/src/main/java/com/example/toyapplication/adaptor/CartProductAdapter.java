@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.toyapplication.R;
 import com.example.toyapplication.callback.ProductListener;
 import com.example.toyapplication.domain.Product;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -28,7 +29,9 @@ public class CartProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         this.products = products;
     }
 
-
+    public void setProductListener(ProductListener productListener){
+        this.productListener = productListener;
+    }
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,7 +62,7 @@ public class CartProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public ImageView cartProduct_IV_image;
         public TextView cartProduct_TV_price;
         public TextView cartProduct_TV_size;
-        public Button cartProduct_BTN_remove;
+        public FloatingActionButton cartProduct_BTN_remove;
 
         public CartProductViewHolder(@NonNull View itemView) {
             super(itemView);

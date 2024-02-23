@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -13,6 +20,9 @@
         android:supportsRtl="false"
         android:theme="@style/Theme.ToyApplication"
         tools:targetApi="31">
+        <activity
+            android:name=".main.EditProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".Sign_Activity"
             android:exported="false" />
